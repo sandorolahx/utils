@@ -8,7 +8,7 @@ export class Mapper {
     map<TSource>(source: TSource, destinationType: DestinationType) {
         const key = source?.constructor?.name + '_' + destinationType;
         switch (key) {
-            case Content.name + '_EntityDst':
+            case EntitySrc.name + '_EntityDst':
                 return new Mapper_EntitySrc_EntityDst().map(source as unknown as EntityDst);
             default:
                 throw new Error(`Cannot find mapper : ${key}`);
@@ -21,8 +21,8 @@ interface IMapper<TSource, TDestination> {
 }
 
 class Mapper_EntitySrc_EntityDst implements IMapper<EntitySrc, EntityDst> {
-    map(source: Content): Event {
-        const destination = new Event();
+    map(source: EntitySrc): EntityDst {
+        const destination = new EntityDst();
         const mapper = new MapMember(source, destination);
 
         return mapper
